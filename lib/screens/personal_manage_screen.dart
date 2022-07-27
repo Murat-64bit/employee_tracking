@@ -1,5 +1,8 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:personel_takip/resources/firestore_methods.dart';
 import 'package:personel_takip/widgets/custom_button.dart';
 import 'package:personel_takip/widgets/custom_textfield.dart';
 
@@ -11,6 +14,18 @@ class PersonalManage extends StatefulWidget {
 }
 
 class _PersonalManageState extends State<PersonalManage> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _adressController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _roleController = TextEditingController();
+  final TextEditingController _salaryController = TextEditingController();
+  final TextEditingController _dailyFoodController = TextEditingController();
+  final TextEditingController _dailyElectricController =
+      TextEditingController();
+  final TextEditingController _roadMoneyController = TextEditingController();
+  final Stream<QuerySnapshot> _personnals = FirebaseFirestore.instance
+      .collection('personnals')
+      .snapshots(includeMetadataChanges: true);
   final List<String> genderItems = [
     'Muraat Türk',
     'Murat',
@@ -23,149 +38,187 @@ class _PersonalManageState extends State<PersonalManage> {
     return Scaffold(
         body: Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          DropdownButtonFormField2(
-            decoration: InputDecoration(
-              //Add isDense true and zero Padding.
-              //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-              isDense: true,
-              contentPadding: EdgeInsets.zero,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              //Add more decoration as you want here
-              //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
-            ),
-            isExpanded: true,
-            hint: const Text(
-              'Personel seçin.',
-              style: TextStyle(fontSize: 14),
-            ),
-            icon: const Icon(
-              Icons.arrow_drop_down,
-              color: Colors.black45,
-            ),
-            iconSize: 30,
-            buttonHeight: 60,
-            buttonPadding: const EdgeInsets.only(left: 20, right: 10),
-            dropdownDecoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            items: genderItems
-                .map((item) => DropdownMenuItem<String>(
-                      value: item,
-                      child: Text(
-                        item,
-                        style: const TextStyle(
-                          fontSize: 14,
-                        ),
-                      ),
-                    ))
-                .toList(),
-            validator: (value) {
-              if (value == null) {
-                return 'Please select gender.';
-              }
-            },
-            onChanged: (value) {
-              //Do something when changing the item if you want.
-            },
-            onSaved: (value) {
-              selectedValue = value.toString();
-            },
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          CustomTextField(hinttext: "ID"),
-          SizedBox(
-            height: 10,
-          ),
-          CustomTextField(hinttext: "Ad Soyad"),
-          SizedBox(
-            height: 10,
-          ),
-          CustomTextField(hinttext: "Adres"),
-          SizedBox(
-            height: 10,
-          ),
-          CustomTextField(hinttext: "Telefon"),
-          SizedBox(
-            height: 10,
-          ),
-          CustomTextField(hinttext: "Rol"),
-          SizedBox(
-            height: 10,
-          ),
-          CustomTextField(hinttext: "Maaş"),
-          SizedBox(
-            height: 10,
-          ),
-          CustomTextField(hinttext: "Günlük Yemek Ücreti"),
-          SizedBox(
-            height: 10,
-          ),
-          CustomTextField(hinttext: "Günlük Elektrik Ücreti"),
-          SizedBox(
-            height: 10,
-          ),
-          CustomTextField(hinttext: "Yol Parası"),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: CustomElevatedButton(
-                    borderRadius: 16,
-                    child: Text(
-                      "Kaydet",
-                      style: TextStyle(color: Colors.white),
-                    )),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                child: CustomElevatedButton(
-                  borderRadius: 16,
-                  child: Text(
-                    "Güncelle",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  color: Colors.orange,
-                ),
-              ),
-              Expanded(
-                child: CustomElevatedButton(
-                  borderRadius: 16,
-                  child: Text(
-                    "Sil",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  color: Colors.red,
-                ),
-              ),
-              Expanded(
-                child: CustomElevatedButton(
-                  borderRadius: 16,
-                  child: Text(
-                    "Geri Dön",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
+      child: StreamBuilder<QuerySnapshot>(
+          stream: _personnals,
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return Text('Something went wrong');
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Text("Loading");
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                DropdownSearch<String>(
+                  items: snapshot.data!.docs
+                      .map((DocumentSnapshot document) {
+                        Map<String, dynamic> data =
+                            document.data()! as Map<String, dynamic>;
+
+                        return data["name"];
+                      })
+                      .toList()
+                      .cast<String>(),
+                  onChanged: (value) {
+                    setState(() async {
+                      var _personelInfo;
+                      _personelInfo = await FirebaseFirestore.instance
+                          .collection('personnals')
+                          .doc(value)
+                          .get();
+                      _nameController.text = _personelInfo.data()!['name'];
+                      _phoneController.text = _personelInfo.data()!['phone'];
+                      _adressController.text = _personelInfo.data()!['adress'];
+                      _dailyElectricController.text =
+                          _personelInfo.data()!['dailyElectric'].toString();
+                      _dailyFoodController.text =
+                          _personelInfo.data()!['dailyFood'].toString();
+                      _roadMoneyController.text =
+                          _personelInfo.data()!['roadMoney'].toString();
+                      _roleController.text = _personelInfo.data()!['role'];
+                      _salaryController.text =
+                          _personelInfo.data()!['salary'].toString();
+                    });
                   },
-                  color: Colors.purple,
+                  popupProps: PopupPropsMultiSelection.menu(
+                    showSelectedItems: true,
+                    disabledItemFn: (String s) => s.startsWith('I'),
+                  ),
                 ),
-              ),
-            ],
-          )
-        ],
-      ),
+                SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                CustomTextField(
+                    hinttext: "Ad Soyad",
+                    label: "Ad Soyad",
+                    textEditingController: _nameController),
+                SizedBox(
+                  height: 10,
+                ),
+                CustomTextField(
+                    hinttext: "Adres",
+                    label: "Adres",
+                    textEditingController: _adressController),
+                SizedBox(
+                  height: 10,
+                ),
+                CustomTextField(
+                    hinttext: "Telefon",
+                    label: "Telefon",
+                    textEditingController: _phoneController),
+                SizedBox(
+                  height: 10,
+                ),
+                CustomTextField(
+                    hinttext: "Rol",
+                    label: "Rol",
+                    textEditingController: _roleController),
+                SizedBox(
+                  height: 10,
+                ),
+                CustomTextField(
+                    hinttext: "Maaş",
+                    label: "Maaş",
+                    textEditingController: _salaryController),
+                SizedBox(
+                  height: 10,
+                ),
+                CustomTextField(
+                    hinttext: "Günlük Yemek Ücreti",
+                    label: "Günlük Yemek Ücreti",
+                    textEditingController: _dailyFoodController),
+                SizedBox(
+                  height: 10,
+                ),
+                CustomTextField(
+                    hinttext: "Günlük Elektrik Ücreti",
+                    label: "Günlük Elektrik Ücreti",
+                    textEditingController: _dailyElectricController),
+                SizedBox(
+                  height: 10,
+                ),
+                CustomTextField(
+                    hinttext: "Yol Parası",
+                    label: "Yol Parası",
+                    textEditingController: _roadMoneyController),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: CustomElevatedButton(
+                        borderRadius: 16,
+                        child: Text(
+                          "Kaydet",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () {
+                          FirestoreMethods().savePersonal(
+                              _nameController.text,
+                              _adressController.text,
+                              _phoneController.text,
+                              _roleController.text,
+                              int.parse(_salaryController.text),
+                              int.parse(_dailyFoodController.text),
+                              int.parse(_dailyElectricController.text),
+                              int.parse(_roadMoneyController.text));
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Expanded(
+                      child: CustomElevatedButton(
+                        borderRadius: 16,
+                        child: Text(
+                          "Güncelle",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        color: Colors.orange,
+                        onPressed: () {
+                          FirestoreMethods().updatePersonal(
+                              _nameController.text,
+                              _adressController.text,
+                              _phoneController.text,
+                              _roleController.text,
+                              int.parse(_salaryController.text),
+                              int.parse(_dailyFoodController.text),
+                              int.parse(_dailyElectricController.text),
+                              int.parse(_roadMoneyController.text));
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: CustomElevatedButton(
+                        borderRadius: 16,
+                        child: Text(
+                          "Sil",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        color: Colors.red,
+                        onPressed: () {
+                          FirestoreMethods()
+                              .deletePersonal(_nameController.text);
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            );
+          }),
     ));
   }
 }

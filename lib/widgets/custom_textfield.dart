@@ -7,6 +7,10 @@ class CustomTextField extends StatelessWidget {
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   final String? hinttext;
+  final String? label;
+  final TextInputType? textInputType;
+  final bool IsPass;
+  final TextEditingController? textEditingController;
 
   const CustomTextField({
     Key? key,
@@ -16,6 +20,10 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon,
     this.prefixIcon,
     this.child,
+    this.textInputType,
+    this.IsPass=false,
+    this.label,
+    this.textEditingController,
   }) : super(key: key);
 
   @override
@@ -34,19 +42,23 @@ class CustomTextField extends StatelessWidget {
         border: Border.all(color: Colors.black12),
         borderRadius: const BorderRadius.all(Radius.circular(15.0)),
       ),
-        child: Center(
-          child: TextField(
-            decoration: InputDecoration(
-              prefixIcon: prefixIcon,
-              suffixIcon: suffixIcon,
-              hintText: hinttext,
-              border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(10.0),
-              ),
+      child: Center(
+        child: TextField(
+          decoration: InputDecoration(
+            prefixIcon: prefixIcon,
+            labelText: label,
+            suffixIcon: suffixIcon,
+            hintText: hinttext,
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(10.0),
             ),
           ),
+          controller: textEditingController,
+          obscureText: IsPass,
+          keyboardType: textInputType,
         ),
+      ),
     );
   }
 }

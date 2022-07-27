@@ -2,7 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
+import 'package:personel_takip/resources/auth_methods.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../screens/login_screen.dart';
 import '../utils/global_variables.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -77,17 +80,32 @@ class _MyHomePageState extends State<MyHomePage> {
                 icon: const Icon(Icons.calculate),
               ),
               SideMenuItem(
-                priority: 3,
+                priority: 2,
                 title: 'Geçmiş Kayıtlar',
                 onTap: () {
-                  page.jumpToPage(3);
+                  page.jumpToPage(2);
                 },
                 icon: const Icon(Icons.history),
               ),
               SideMenuItem(
-                priority: 6,
+                priority: 3,
+                title: 'Hesap Bilgilerim',
+                onTap: () {
+                  page.jumpToPage(3);
+                },
+                icon: const Icon(Icons.person),
+              ),
+              SideMenuItem(
+                priority: 4,
                 title: 'Exit',
-                onTap: () async {},
+                onTap: () async {
+                 AuthMethods().signOut();
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.remove('email');
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (ctx) => LoginScreen()));
+                },
                 icon: const Icon(Icons.exit_to_app),
               ),
             ],

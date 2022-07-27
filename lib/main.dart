@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:personel_takip/responsive/main_layout.dart';
+import 'package:personel_takip/screens/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,10 +17,13 @@ void main() async {
         storageBucket: 'flutter-personal-tracking.appspot.com',
       ),
     );
-  }else {
+  } else {
     await Firebase.initializeApp();
   }
-  runApp(const MyApp());
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var email = prefs.getString('email');
+  print(email);
+  runApp(MaterialApp(home: email == null ? LoginScreen() : MyHomePage()));
 }
 
 class MyApp extends StatelessWidget {
@@ -31,7 +36,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

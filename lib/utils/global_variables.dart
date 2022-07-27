@@ -1,18 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:personel_takip/screens/acc_info_screen.dart';
 import 'package:personel_takip/screens/calculate_screen.dart';
+import 'package:personel_takip/screens/history_screen.dart';
+import 'package:personel_takip/screens/personal_manage_screen.dart';
 import 'package:personel_takip/screens/workers_screen.dart';
 
 final homeScreenItems = [
-  WorkersScreen(),
+  PersonalManage(),
   CalculateScreen(),
-  Container(
-    color: Colors.white,
-    child: const Center(
-      child: Text(
-        'Geçmiş Kayıtlar',
-        style: TextStyle(fontSize: 35),
-      ),
-    ),
-  ),
+  HistoryScreen(),
+  AccInfoScreen(uid: FirebaseAuth.instance.currentUser!.uid),
 ];
+
+enum ChooseManage { Mail, Password }
+
 
