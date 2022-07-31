@@ -41,10 +41,6 @@ class AccManagementScreenState extends State<AccManagementScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Hesap Bilgilerim"),
-        backgroundColor: Colors.grey.shade400,
-      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

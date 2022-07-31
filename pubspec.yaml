@@ -43,6 +43,7 @@ dependencies:
   uuid: ^3.0.6
   intl: ^0.17.0
   shared_preferences: ^2.0.15
+  pluto_menu_bar: ^1.1.2
 
 dev_dependencies:
   flutter_test:

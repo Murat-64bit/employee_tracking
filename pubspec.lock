@@ -282,6 +282,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.4"
+  pluto_menu_bar:
+    dependency: "direct main"
+    description:
+      name: pluto_menu_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.2"
   process:
     dependency: transitive
     description:
