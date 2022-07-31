@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:personel_takip/resources/auth_methods.dart';
 import 'package:pluto_menu_bar/pluto_menu_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';

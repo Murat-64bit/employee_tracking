@@ -37,16 +37,15 @@ class _PersonalManageState extends State<PersonalManage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           child: StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection("personnals")
-                .snapshots(),
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot> snapshot) {
+            stream:
+                FirebaseFirestore.instance.collection("personnals").snapshots(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
                 return const Text('Something went wrong');
               }
@@ -80,33 +79,108 @@ class _PersonalManageState extends State<PersonalManage> {
                       ),
                     ),
                   );
+                  displayedDataCell.add(
+                    DataCell(
+                      Text(
+                        item['role'].toString(),
+                      ),
+                    ),
+                  );
+                  displayedDataCell.add(
+                    DataCell(
+                      Text(
+                        item['salary'].toString()+ " TL",
+                      ),
+                    ),
+                  );
+                  displayedDataCell.add(
+                    DataCell(
+                      Text(
+                        item['roadMoney'].toString()+ " TL",
+                      ),
+                    ),
+                  );
+                  displayedDataCell.add(
+                    DataCell(
+                      Text(
+                        item['dailyElectric'].toString() + " TL",
+                      ),
+                    ),
+                  );
+                  displayedDataCell.add(
+                    DataCell(
+                      Text(
+                        item['dailyFood'].toString()+ " TL",
+                      ),
+                    ),
+                  );
                 }
 
                 return Expanded(
                   child: DataTable(
+                    headingRowColor:
+                        MaterialStateColor.resolveWith((states) => Colors.white12),
                     columns: const <DataColumn>[
                       DataColumn(
                         label: Text(
-                          'Date',
+                          'Ad Soyad',
+                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
                         ),
                       ),
                       DataColumn(
                         label: Text(
-                          'Amount',
+                          'Telefon',
+                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
                         ),
                       ),
                       DataColumn(
                         label: Text(
-                          'Optional Detail',
+                          'Adres',
+                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Rol',
+                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Maaş',
+                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Yol Ücreti',
+                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Günlük Elektrik',
+                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Günlük Yemek',
+                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
                     rows: <DataRow>[
-                      for (int i = 0; i < displayedDataCell.length; i += 3)
+                      for (int i = 0; i < displayedDataCell.length; i += 8)
                         DataRow(cells: [
                           displayedDataCell[i],
                           displayedDataCell[i + 1],
-                          displayedDataCell[i + 2]
+                          displayedDataCell[i + 2],
+                          displayedDataCell[i + 3],
+                          displayedDataCell[i + 4],
+                          displayedDataCell[i + 5],
+                          displayedDataCell[i + 6],
+                          displayedDataCell[i + 7],
                         ])
                     ],
                   ),
@@ -161,12 +235,10 @@ class _PersonalManageState extends State<PersonalManage> {
                             _dailyElectricController.text = _personelInfo
                                 .data()!['dailyElectric']
                                 .toString();
-                            _dailyFoodController.text = _personelInfo
-                                .data()!['dailyFood']
-                                .toString();
-                            _roadMoneyController.text = _personelInfo
-                                .data()!['roadMoney']
-                                .toString();
+                            _dailyFoodController.text =
+                                _personelInfo.data()!['dailyFood'].toString();
+                            _roadMoneyController.text =
+                                _personelInfo.data()!['roadMoney'].toString();
                             _roleController.text =
                                 _personelInfo.data()!['role'];
                             _salaryController.text =
@@ -258,8 +330,7 @@ class _PersonalManageState extends State<PersonalManage> {
                                     _roleController.text,
                                     int.parse(_salaryController.text),
                                     int.parse(_dailyFoodController.text),
-                                    int.parse(
-                                        _dailyElectricController.text),
+                                    int.parse(_dailyElectricController.text),
                                     int.parse(_roadMoneyController.text));
                                 setState(() {});
                               },
@@ -284,8 +355,7 @@ class _PersonalManageState extends State<PersonalManage> {
                                     _roleController.text,
                                     int.parse(_salaryController.text),
                                     int.parse(_dailyFoodController.text),
-                                    int.parse(
-                                        _dailyElectricController.text),
+                                    int.parse(_dailyElectricController.text),
                                     int.parse(_roadMoneyController.text));
                                 setState(() {});
                               },
