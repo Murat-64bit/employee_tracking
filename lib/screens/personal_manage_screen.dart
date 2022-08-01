@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:data_table_2/data_table_2.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personel_takip/resources/firestore_methods.dart';
 import 'package:personel_takip/widgets/custom_button.dart';
 import 'package:personel_takip/widgets/custom_textfield.dart';
+import 'dart:html' as html;
 
 class PersonalManage extends StatefulWidget {
   PersonalManage({Key? key}) : super(key: key);
@@ -37,9 +39,9 @@ class _PersonalManageState extends State<PersonalManage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
         Expanded(
           child: StreamBuilder(
             stream:
@@ -49,14 +51,14 @@ class _PersonalManageState extends State<PersonalManage> {
               if (snapshot.hasError) {
                 return const Text('Something went wrong');
               }
-
+          
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Text("Loading");
               }
-
+          
               if (snapshot.hasData) {
                 List<DataCell> displayedDataCell = [];
-
+          
                 for (var item in snapshot.data!.docs) {
                   displayedDataCell.add(
                     DataCell(
@@ -89,14 +91,14 @@ class _PersonalManageState extends State<PersonalManage> {
                   displayedDataCell.add(
                     DataCell(
                       Text(
-                        item['salary'].toString()+ " TL",
+                        item['salary'].toString() + " TL",
                       ),
                     ),
                   );
                   displayedDataCell.add(
                     DataCell(
                       Text(
-                        item['roadMoney'].toString()+ " TL",
+                        item['roadMoney'].toString() + " TL",
                       ),
                     ),
                   );
@@ -110,80 +112,88 @@ class _PersonalManageState extends State<PersonalManage> {
                   displayedDataCell.add(
                     DataCell(
                       Text(
-                        item['dailyFood'].toString()+ " TL",
+                        item['dailyFood'].toString() + " TL",
                       ),
                     ),
                   );
                 }
-
-                return Expanded(
-                  child: DataTable(
-                    headingRowColor:
-                        MaterialStateColor.resolveWith((states) => Colors.white12),
-                    columns: const <DataColumn>[
-                      DataColumn(
-                        label: Text(
-                          'Ad Soyad',
-                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
-                        ),
+          
+                return DataTable2(
+                  headingRowColor: MaterialStateColor.resolveWith(
+                      (states) => Colors.white12),
+                  columns: const <DataColumn>[
+                    DataColumn(
+                      label: Text(
+                        'Ad Soyad',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      DataColumn(
-                        label: Text(
-                          'Telefon',
-                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
-                        ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Telefon',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      DataColumn(
-                        label: Text(
-                          'Adres',
-                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
-                        ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Adres',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      DataColumn(
-                        label: Text(
-                          'Rol',
-                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
-                        ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Rol',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      DataColumn(
-                        label: Text(
-                          'Maaş',
-                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
-                        ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Maaş',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      DataColumn(
-                        label: Text(
-                          'Yol Ücreti',
-                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
-                        ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Yol Ücreti',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      DataColumn(
-                        label: Text(
-                          'Günlük Elektrik',
-                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
-                        ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Günlük Elektrik',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      DataColumn(
-                        label: Text(
-                          'Günlük Yemek',
-                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
-                        ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Günlük Yemek',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                    ],
-                    rows: <DataRow>[
-                      for (int i = 0; i < displayedDataCell.length; i += 8)
-                        DataRow(cells: [
-                          displayedDataCell[i],
-                          displayedDataCell[i + 1],
-                          displayedDataCell[i + 2],
-                          displayedDataCell[i + 3],
-                          displayedDataCell[i + 4],
-                          displayedDataCell[i + 5],
-                          displayedDataCell[i + 6],
-                          displayedDataCell[i + 7],
-                        ])
-                    ],
-                  ),
+                    ),
+                  ],
+                  rows: <DataRow>[
+                    for (int i = 0;
+                        i < displayedDataCell.length;
+                        i += 8)
+                      DataRow(cells: [
+                        displayedDataCell[i],
+                        displayedDataCell[i + 1],
+                        displayedDataCell[i + 2],
+                        displayedDataCell[i + 3],
+                        displayedDataCell[i + 4],
+                        displayedDataCell[i + 5],
+                        displayedDataCell[i + 6],
+                        displayedDataCell[i + 7],
+                      ])
+                  ],
                 );
               }
               return const CircularProgressIndicator();
@@ -192,7 +202,7 @@ class _PersonalManageState extends State<PersonalManage> {
         ),
         Container(
           width: MediaQuery.of(context).size.width / 3,
-          height: MediaQuery.of(context).size.height / 1.25,
+          height: double.infinity,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: StreamBuilder<QuerySnapshot>(
@@ -202,7 +212,7 @@ class _PersonalManageState extends State<PersonalManage> {
                   if (snapshot.hasError) {
                     return Text('Something went wrong');
                   }
-
+        
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Text("Loading");
                   }
@@ -214,7 +224,7 @@ class _PersonalManageState extends State<PersonalManage> {
                             .map((DocumentSnapshot document) {
                               Map<String, dynamic> data =
                                   document.data()! as Map<String, dynamic>;
-
+        
                               return data["name"];
                             })
                             .toList()
@@ -323,16 +333,17 @@ class _PersonalManageState extends State<PersonalManage> {
                                 style: TextStyle(color: Colors.white),
                               ),
                               onPressed: () {
-                                FirestoreMethods().savePersonal(
-                                    _nameController.text,
-                                    _adressController.text,
-                                    _phoneController.text,
-                                    _roleController.text,
-                                    int.parse(_salaryController.text),
-                                    int.parse(_dailyFoodController.text),
-                                    int.parse(_dailyElectricController.text),
-                                    int.parse(_roadMoneyController.text));
-                                setState(() {});
+                                setState(() {
+                                  FirestoreMethods().savePersonal(
+                                      _nameController.text,
+                                      _adressController.text,
+                                      _phoneController.text,
+                                      _roleController.text,
+                                      int.parse(_salaryController.text),
+                                      int.parse(_dailyFoodController.text),
+                                      int.parse(_dailyElectricController.text),
+                                      int.parse(_roadMoneyController.text));
+                                });
                               },
                             ),
                           ),
@@ -348,16 +359,17 @@ class _PersonalManageState extends State<PersonalManage> {
                               ),
                               color: Colors.orange,
                               onPressed: () {
-                                FirestoreMethods().updatePersonal(
-                                    _nameController.text,
-                                    _adressController.text,
-                                    _phoneController.text,
-                                    _roleController.text,
-                                    int.parse(_salaryController.text),
-                                    int.parse(_dailyFoodController.text),
-                                    int.parse(_dailyElectricController.text),
-                                    int.parse(_roadMoneyController.text));
-                                setState(() {});
+                                setState(() {
+                                  FirestoreMethods().updatePersonal(
+                                      _nameController.text,
+                                      _adressController.text,
+                                      _phoneController.text,
+                                      _roleController.text,
+                                      int.parse(_salaryController.text),
+                                      int.parse(_dailyFoodController.text),
+                                      int.parse(_dailyElectricController.text),
+                                      int.parse(_roadMoneyController.text));
+                                });
                               },
                             ),
                           ),
@@ -370,9 +382,10 @@ class _PersonalManageState extends State<PersonalManage> {
                               ),
                               color: Colors.red,
                               onPressed: () {
-                                FirestoreMethods()
-                                    .deletePersonal(_nameController.text);
-                                setState(() {});
+                                setState(() {
+                                  FirestoreMethods()
+                                      .deletePersonal(_nameController.text);
+                                });
                               },
                             ),
                           ),
@@ -383,7 +396,7 @@ class _PersonalManageState extends State<PersonalManage> {
                 }),
           ),
         ),
-      ],
-    ));
+            ],
+          ));
   }
 }
