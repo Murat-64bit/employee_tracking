@@ -329,9 +329,9 @@ class _PersonalManageState extends State<PersonalManage> {
                             child: TextButton.icon(
                               label: Text(
                                 "Kaydet",
-                                style: TextStyle(color: Colors.blue,fontSize: 22),
+                                style: TextStyle(color: Color.fromARGB(255, 50, 54, 69),fontSize: 22),
                               ),
-                              icon: Icon(Icons.save),
+                              icon: Icon(Icons.save,color: Color.fromARGB(255, 50, 54, 69),),
                               onPressed: () {
                                 setState(() {
                                   FirestoreMethods().savePersonal(
@@ -352,10 +352,10 @@ class _PersonalManageState extends State<PersonalManage> {
                           ),
                           Expanded(
                             child: TextButton.icon(
-                              icon: Icon(Icons.update,color: Colors.orange),
+                              icon: Icon(Icons.update,color: Color.fromARGB(255, 50, 54, 69)),
                               label: Text(
                                 "Güncelle",
-                                style: TextStyle(color: Colors.orange,fontSize: 22),
+                                style: TextStyle(color: Color.fromARGB(255, 50, 54, 69),fontSize: 22),
                               ),
                               onPressed: () {
                                 setState(() {
@@ -374,10 +374,10 @@ class _PersonalManageState extends State<PersonalManage> {
                           ),
                           Expanded(
                             child: TextButton.icon(
-                              icon: Icon(Icons.remove_circle,color: Colors.red),
+                              icon: Icon(Icons.remove_circle,color: Color.fromARGB(255, 50, 54, 69)),
                               label: Text(
                                 "Sil",
-                                style: TextStyle(color: Colors.red,fontSize: 22),
+                                style: TextStyle(color: Color.fromARGB(255, 50, 54, 69),fontSize: 22),
                               ),
                               onPressed: () {
                                 setState(() {

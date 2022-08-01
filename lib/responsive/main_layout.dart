@@ -6,6 +6,7 @@ import 'package:pluto_menu_bar/pluto_menu_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../screens/login_screen.dart';
+import '../screens/signin_screen.dart';
 import '../utils/global_variables.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -52,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.remove('email');
           Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (ctx) => LoginScreen()));
+              MaterialPageRoute(builder: (ctx) => SignInScreen()));
         },
       ),
     ];
@@ -68,15 +69,15 @@ class _MyHomePageState extends State<MyHomePage> {
             height: 75,
             child: Expanded(
               child: PlutoMenuBar(
-                backgroundColor: Colors.white,
+                backgroundColor: Color.fromARGB(255, 50, 54, 69),
                 activatedColor: Colors.grey,
-                unselectedColor: Colors.white70,
-                indicatorColor: Colors.black,
-                textStyle: const TextStyle(color: Colors.black, fontSize: 20),
+                unselectedColor: Color.fromARGB(255, 50, 54, 69),
+                indicatorColor: Colors.white,
+                textStyle: const TextStyle(color: Colors.white, fontSize: 20),
                 height: 65,
-                menuIconColor: Colors.black,
+                menuIconColor: Colors.white,
                 menuIconSize: 26,
-                moreIconColor: Colors.black,
+                moreIconColor: Colors.white,
                 menus: getMenus(context),
               ),
             ),

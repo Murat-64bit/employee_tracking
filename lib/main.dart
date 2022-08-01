@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:personel_takip/responsive/main_layout.dart';
 import 'package:personel_takip/screens/login_screen.dart';
+import 'package:personel_takip/screens/signin_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -23,7 +25,8 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var email = prefs.getString('email');
   print(email);
-  runApp(MaterialApp(home: email == null ? LoginScreen() : MyHomePage()));
+
+  runApp(MaterialApp(home: email == null ? SignInScreen() : MyHomePage()));
 }
 
 class MyApp extends StatelessWidget {
@@ -36,7 +39,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginScreen(),
+      home: SignInScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

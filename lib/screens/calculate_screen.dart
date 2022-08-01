@@ -248,19 +248,26 @@ class _CalculateScreenState extends State<CalculateScreen> {
                         SizedBox(
                           height: 10,
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Elektrik Parası:" + dailyElectric.toString()),
-                            Text("Yol Parası:" + roadMoney.toString()),
-                            Text("Yemek Parası:" + dailyFood.toString()),
-                            Text("Maaş:" + salary.toString()),
-                            Text(
-                              "Toplam Ödenecek:" + total.toString(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
+                        Container(
+                          color: Color.fromARGB(255, 50, 54, 69),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Elektrik Parası: " + dailyElectric.toString(),style: TextStyle(color: Colors.white),),
+                                Text("Yol Parası: " + roadMoney.toString(),style: TextStyle(color: Colors.white)),
+                                Text("Yemek Parası: " + dailyFood.toString(),style: TextStyle(color: Colors.white)),
+                                Text("Maaş: " + salary.toString(),style: TextStyle(color: Colors.white)),
+                                Text(
+                                  "Toplam Ödenecek: " + total.toString(),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 16,color: Colors.white),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                         SizedBox(
                           height: 10,
@@ -269,12 +276,13 @@ class _CalculateScreenState extends State<CalculateScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Expanded(
-                              child: CustomElevatedButton(
-                                borderRadius: 16,
-                                child: Text(
+                              child: TextButton.icon(
+                                label: Text(
                                   "Hesapla",
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 50, 54, 69), fontSize: 22),
                                 ),
+                                icon: Icon(Icons.calculate,color: Color.fromARGB(255, 50, 54, 69),),
                                 onPressed: () {
                                   setState(() {
                                     dailyElectric *= int.parse(_home.text);
@@ -292,8 +300,13 @@ class _CalculateScreenState extends State<CalculateScreen> {
                               height: 10,
                             ),
                             Expanded(
-                              child: CustomElevatedButton(
-                                borderRadius: 16,
+                              child: TextButton.icon(
+                                label: Text(
+                                  "Veriyi Kaydet",
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 50, 54, 69), fontSize: 22),
+                                ),
+                                icon: Icon(Icons.save,color: Color.fromARGB(255, 50, 54, 69),),
                                 onPressed: () {
                                   setState(() {
                                     now = new DateTime.now();
@@ -318,11 +331,7 @@ class _CalculateScreenState extends State<CalculateScreen> {
                                         dateTime);
                                   });
                                 },
-                                child: Text(
-                                  "Veriyi Kaydet",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                color: Colors.orange,
+                                
                               ),
                             ),
                           ],

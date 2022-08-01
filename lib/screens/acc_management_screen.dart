@@ -2,6 +2,7 @@ import 'package:personel_takip/resources/auth_methods.dart';
 import 'package:personel_takip/screens/login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:personel_takip/screens/signin_screen.dart';
 import 'package:personel_takip/widgets/custom_textfield.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -86,7 +87,7 @@ class AccManagementScreenState extends State<AccManagementScreen> {
       Navigator.pushAndRemoveUntil<void>(
         context,
         MaterialPageRoute<void>(
-            builder: (BuildContext context) => const LoginScreen()),
+            builder: (BuildContext context) => const SignInScreen()),
         ModalRoute.withName('/'),
       );
     } else if (widget.selectedManage == ChooseManage.Password) {
@@ -96,7 +97,7 @@ class AccManagementScreenState extends State<AccManagementScreen> {
       Navigator.pushAndRemoveUntil<void>(
         context,
         MaterialPageRoute<void>(
-            builder: (BuildContext context) => const LoginScreen()),
+            builder: (BuildContext context) => const SignInScreen()),
         ModalRoute.withName('/'),
       );
     }
