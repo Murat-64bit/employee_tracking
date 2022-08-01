@@ -201,7 +201,7 @@ class _PersonalManageState extends State<PersonalManage> {
           ),
         ),
         Container(
-          width: MediaQuery.of(context).size.width / 3,
+          width: MediaQuery.of(context).size.width / 4,
           height: double.infinity,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -326,12 +326,12 @@ class _PersonalManageState extends State<PersonalManage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Expanded(
-                            child: CustomElevatedButton(
-                              borderRadius: 16,
-                              child: Text(
+                            child: TextButton.icon(
+                              label: Text(
                                 "Kaydet",
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.blue,fontSize: 22),
                               ),
+                              icon: Icon(Icons.save),
                               onPressed: () {
                                 setState(() {
                                   FirestoreMethods().savePersonal(
@@ -351,13 +351,12 @@ class _PersonalManageState extends State<PersonalManage> {
                             height: 10,
                           ),
                           Expanded(
-                            child: CustomElevatedButton(
-                              borderRadius: 16,
-                              child: Text(
+                            child: TextButton.icon(
+                              icon: Icon(Icons.update,color: Colors.orange),
+                              label: Text(
                                 "Güncelle",
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.orange,fontSize: 22),
                               ),
-                              color: Colors.orange,
                               onPressed: () {
                                 setState(() {
                                   FirestoreMethods().updatePersonal(
@@ -374,13 +373,12 @@ class _PersonalManageState extends State<PersonalManage> {
                             ),
                           ),
                           Expanded(
-                            child: CustomElevatedButton(
-                              borderRadius: 16,
-                              child: Text(
+                            child: TextButton.icon(
+                              icon: Icon(Icons.remove_circle,color: Colors.red),
+                              label: Text(
                                 "Sil",
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.red,fontSize: 22),
                               ),
-                              color: Colors.red,
                               onPressed: () {
                                 setState(() {
                                   FirestoreMethods()

@@ -9,7 +9,6 @@ import 'package:personel_takip/screens/workers_screen.dart';
 final homeScreenItems = [
   PersonalManage(),
   CalculateScreen(),
-  HistoryScreen(),
   AccInfoScreen(uid: FirebaseAuth.instance.currentUser!.uid),
 ];
 

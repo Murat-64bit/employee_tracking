@@ -35,18 +35,13 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: () => page.jumpToPage(0),
       ),
       PlutoMenuItem(
-        title: 'Ücret Hesapla',
+        title: 'Geçmiş ve Ücretlendirme',
         icon: Icons.calculate,
         onTap: () => page.jumpToPage(1),
       ),
       PlutoMenuItem(
-        title: 'Geçmiş Kayıtlar',
-        onTap: () => page.jumpToPage(2),
-        icon: Icons.history,
-      ),
-      PlutoMenuItem(
         title: 'Hesap Bilgilerim',
-        onTap: () => page.jumpToPage(3),
+        onTap: () => page.jumpToPage(2),
         icon: Icons.person,
       ),
       PlutoMenuItem(
